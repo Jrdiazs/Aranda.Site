@@ -1,0 +1,95 @@
+﻿@model Aranda.Site.Models.UserFilterByRol
+
+<h4>Search Users by Rol</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="formID">
+            <div class="form-row align-items-center">
+               
+                <div class="col-auto">
+                    <label asp-for="RolId" class="sr-only"></label>
+                    <select id="rolid" name="RolId"></select>
+                    <span asp-validation-for="RolId" class="text-danger"></span>
+                </div>
+                 <div class="col-auto">
+                     <input type="button" id="bttnSearch" value="Search" class="btn btn-primary mb-2" />
+                </div>
+            </div>        
+           
+        </form>
+    </div>
+</div>
+<div class="row"> 
+    <div class="col-12">
+        <br />
+        <div id="divTable"></div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Message))
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.LabelForModel(Model.Message)
+        </div>
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+     $(document).ready(function()
+        {
+            LoadDropRol();
+
+            $("#bttnSearch").click(function()
+            {
+                $('#formID').validate();
+
+                if($('#formID').valid())
+                {
+                     var form = $("#formID").serialize();
+
+                    $.ajax({
+                        url: "@Url.Action("SearchByRol","Users")",
+                        type: 'POST',
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        dataType: "html",
+                        data: form ,
+                        success: function (data) {
+                            $("#divTable").html(data);
+                        },
+                        error: function (errMsg) {
+                             console.log(data);
+                        }
+                    })
+                    }
+              
+            });
+        });
+
+        function LoadDropRol()
+        {
+            $.ajax({  
+                type: "GET",  
+                url: "@Url.Action("GetAll","Rol")",    
+                success: function (data) { 
+
+                     var html = '<option value="">Please Select Rol</option>';  
+                    if(data.success)
+                    {
+                        for (var i = 0; i < data.data.length; i++) 
+                        html += '<option value="' + data.data[i].rolId + '">' + data.data[i].rolName + '</option>';  
+                             
+                    }
+                   
+                    $("#rolid").html(html);  
+                }  
+                });  
+
+        }
+    </script>
+}

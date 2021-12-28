@@ -1,0 +1,11 @@
+﻿@model Aranda.Site.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "User List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@await Html.PartialAsync("_UserList",Model)

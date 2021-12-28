@@ -1,0 +1,36 @@
+﻿@model Aranda.Services.Responses.MenuResponseListItems
+
+<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Aranda</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	<ul class="navbar-nav mr-auto">
+		@*Menu Items from the database*@
+		@foreach (var item in Model.Data)
+		{
+
+			if (!item.MenuChildrens.Any())
+			{
+				<li class="nav-item active">
+					<a class="nav-link text" asp-area="" asp-controller="@item.Menu.MenuController" asp-action="@item.Menu.MenuAction">@item.Menu.MenuName</a>
+				</li>
+
+			}
+
+			if(item.MenuChildrens.Any())
+			{
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Menu.MenuName</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown01">
+						@foreach (var itm in item.MenuChildrens)
+						{
+							<a class="dropdown-item" asp-area="" asp-controller="@itm.Menu.MenuController" asp-action="@itm.Menu.MenuAction">@itm.Menu.MenuName</a>
+						}
+						</div>
+						</li>
+								
+			}
+		}
+	</ul>
+</div>

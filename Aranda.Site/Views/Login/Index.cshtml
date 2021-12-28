@@ -1,0 +1,80 @@
+﻿@model Aranda.Site.Models.Login
+@{    
+    Layout = null;    
+}    
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Aranda</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>   
+<body class="hold-transition login-page">    
+  <div class="login-box">    
+   <div class="card">    
+            <div class="card-body login-card-body">    
+                <p class="login-box-msg">Sign in to start your session</p>    
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form id="frmLogin"  asp-route-returnurl="@ViewData["ReturnUrl"]" >    
+    
+    
+                    <div class="form-group">    
+                        <div class="input-group mb-3">    
+                            <input asp-for="@Model.UserName" class="form-control" placeholder="User Name">    
+                            <div class="input-group-append">    
+                                <div class="input-group-text">    
+                                    <span class="fas fa-envelope"></span>    
+                                </div>    
+                            </div>    
+                        </div>    
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>    
+                    </div>    
+    
+    
+                    <div class="form-group">    
+                        <div class="input-group mb-3">    
+                            <input asp-for="@Model.Password" class="form-control" placeholder="Password">    
+                            <div class="input-group-append">    
+                                <div class="input-group-text">    
+                                    <span class="fas fa-lock"></span>    
+                                </div>    
+                            </div>    
+                        </div>    
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>    
+                    </div>    
+    
+    
+                    <div class="row">    
+                         
+                        <!-- /.col -->    
+                        <div class="col-4">    
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>    
+                        </div>    
+                        <!-- /.col -->    
+                    </div>
+                     @if (!string.IsNullOrWhiteSpace(Model.Message))
+                     {
+                        <div class="alert alert-danger" role="alert">
+                        @Html.LabelForModel(Model.Message)
+                        </div>
+                     }
+                </form>    
+            </div>    
+            <!-- /.login-card-body -->    
+        </div>    
+    </div>   
+  
+
+
+
+</body>    
+</html>

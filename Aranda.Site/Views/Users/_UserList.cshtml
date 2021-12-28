@@ -1,0 +1,95 @@
+﻿@model Aranda.Site.Models.UserViewModel
+
+
+@if (Model.Data.Success)
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                 @Html.Label("Id")
+            </th>
+            <th>
+               @Html.Label("Name")
+            </th>
+            <th>
+                @Html.Label("Full Name")
+            </th>
+
+            <th>
+                 @Html.Label("Rol")
+            </th>
+            <th>
+                @Html.Label("Address")
+                
+            </th>
+            <th>
+                 @Html.Label("Phone")
+            </th>
+            <th>
+                @Html.Label("Email")
+                
+            </th>
+            <th>
+                @Html.Label("Birthday")    
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Data.Data) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.RolName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @if (Model.Edit)
+                {
+                    @Html.ActionLink("Edit", "Save", new { id= item.Id })                         
+                    
+                }
+                
+                @if (Model.Delete)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id= item.Id })                
+                }
+               
+            </td>
+        </tr>
+        }
+        </tbody>
+        </table>
+
+
+}
+else
+{
+    @if (!string.IsNullOrWhiteSpace(Model.Data.Message))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Html.LabelForModel(Model.Data.Message)
+        </div>
+    }
+}
+

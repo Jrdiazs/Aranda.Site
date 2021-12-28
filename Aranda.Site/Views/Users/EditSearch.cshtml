@@ -1,0 +1,79 @@
+﻿@model Aranda.Site.Models.UserFilterByName
+
+<h4>Edit Users</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="formID">
+            <div class="form-row align-items-center">
+                <input id="search" name="search" asp-for="Search" type="hidden"/>
+                <div class="col-auto">
+                    <label asp-for="FullName" class="sr-only"></label>
+                     <input asp-for="FullName" class="form-control mb-2" placeholder="Full Name" name="FullName" id="FullName" />
+                     <span asp-validation-for="FullName"  class="text-danger"></span>
+                </div>
+                 <div class="col-auto">
+                     <input type="button" id="bttnSearch" value="Search" class="btn btn-primary mb-2" />
+                </div>
+            </div>        
+           
+        </form>
+    </div>
+</div>
+
+<div class="row"> 
+    <div class="col-12">
+        <br />
+        <div id="divTable"></div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+     $(document).ready(function()
+        {
+           
+            $("#bttnSearch").click(function()
+            {
+                $('#formID').validate();
+
+                if($('#formID').valid())
+                {
+                     var form = $("#formID").serialize();
+
+                    $.ajax({
+                        url: "@Url.Action("EditSearch","Users")",
+                        type: 'POST',
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                        dataType: "html",
+                        data: form ,
+                        success: function (data) {
+                            $("#divTable").html(data);
+                        },
+                        error: function (errMsg) {
+                             console.log(data);
+                        }
+                    });
+                   
+
+                }
+            });
+            
+            Search();
+        });
+
+        function Search()
+        {
+            var search = $("#search").val();
+            if(search.toLowerCase().trim() === "true")
+            {
+                 $("#bttnSearch").trigger("click");
+            }
+        }
+    </script>
+}
